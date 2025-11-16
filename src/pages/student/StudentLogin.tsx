@@ -1,18 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import AuthForm from "@/components/auth/AuthForm";
 import studentIllustration from "@/assets/student-illustration.png";
 
 const StudentLogin = () => {
   const navigate = useNavigate();
+  const { user, userRole } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate("/student/dashboard");
-  };
+  useEffect(() => {
+    if (user && userRole === "student") {
+      navigate("/student/dashboard");
+    }
+  }, [user, userRole, navigate]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -43,33 +46,10 @@ const StudentLogin = () => {
             </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="student@college.edu"
-                className="bg-background"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                className="bg-background"
-                required
-              />
-            </div>
-
-            <Button type="submit" className="w-full">
-              Login as Student
-            </Button>
-          </form>
+          <AuthForm 
+            role="student" 
+            onSuccess={() => navigate("/student/dashboard")} 
+          />
         </Card>
       </div>
     </div>

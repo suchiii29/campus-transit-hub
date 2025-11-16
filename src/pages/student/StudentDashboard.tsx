@@ -4,11 +4,39 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { LogOut, Bus, MapPin, Clock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import MapPlaceholder from "@/components/MapPlaceholder";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
+  const { user, userRole, loading, signOut } = useAuth();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (!loading && (!user || userRole !== "student")) {
+      navigate("/student/login");
+    }
+  }, [user, userRole, loading, navigate]);
+
+  const handleLogout = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to logout",
+        variant: "destructive",
+      });
+    } else {
+      navigate("/student/login");
+    }
+  };
+
+  if (loading || !user || userRole !== "student") {
+    return null;
+  }
 
   const nearestBuses = [
     { id: "BUS-101", route: "Main Campus → North Gate", eta: "5 mins", distance: "0.8 km" },
@@ -24,7 +52,7 @@ const StudentDashboard = () => {
             <h1 className="text-2xl font-bold text-card-foreground">Student Dashboard</h1>
             <p className="text-sm text-muted-foreground">Welcome back, Student</p>
           </div>
-          <Button variant="outline" size="sm" onClick={() => navigate("/student/login")}>
+          <Button variant="outline" size="sm" onClick={handleLogout}>
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>
