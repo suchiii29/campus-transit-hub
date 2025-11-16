@@ -3,12 +3,40 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { LogOut, Bus, Users, TrendingUp, Map, BarChart3, Route, UserPlus } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import StatCard from "@/components/StatCard";
 import MapPlaceholder from "@/components/MapPlaceholder";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { user, userRole, loading, signOut } = useAuth();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (!loading && (!user || userRole !== "admin")) {
+      navigate("/admin/login");
+    }
+  }, [user, userRole, loading, navigate]);
+
+  const handleLogout = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to logout",
+        variant: "destructive",
+      });
+    } else {
+      navigate("/admin/login");
+    }
+  };
+
+  if (loading || !user || userRole !== "admin") {
+    return null;
+  }
 
   const demandPredictions = [
     { time: "08:00 AM", predicted: 45, actual: 42 },
@@ -39,7 +67,7 @@ const AdminDashboard = () => {
             <h1 className="text-2xl font-bold text-card-foreground">Admin Dashboard</h1>
             <p className="text-sm text-muted-foreground">Fleet Management & Analytics</p>
           </div>
-          <Button variant="outline" size="sm" onClick={() => navigate("/admin/login")}>
+          <Button variant="outline" size="sm" onClick={handleLogout}>
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>

@@ -1,11 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { LogOut, MapPin, Route, Clock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import MapPlaceholder from "@/components/MapPlaceholder";
 
 const DriverDashboard = () => {
   const navigate = useNavigate();
+  const { user, userRole, loading, signOut } = useAuth();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (!loading && (!user || userRole !== "driver")) {
+      navigate("/driver/login");
+    }
+  }, [user, userRole, loading, navigate]);
+
+  const handleLogout = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to logout",
+        variant: "destructive",
+      });
+    } else {
+      navigate("/driver/login");
+    }
+  };
+
+  if (loading || !user || userRole !== "driver") {
+    return null;
+  }
 
   const assignedRoute = [
     { stop: "Main Gate", time: "08:00 AM", status: "completed" },
@@ -23,7 +51,7 @@ const DriverDashboard = () => {
             <h1 className="text-2xl font-bold text-card-foreground">Driver Dashboard</h1>
             <p className="text-sm text-muted-foreground">Bus ID: BUS-101</p>
           </div>
-          <Button variant="outline" size="sm" onClick={() => navigate("/driver/login")}>
+          <Button variant="outline" size="sm" onClick={handleLogout}>
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>

@@ -1,18 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import AuthForm from "@/components/auth/AuthForm";
 import adminIllustration from "@/assets/admin-illustration.png";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const { user, userRole } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate("/admin/dashboard");
-  };
+  useEffect(() => {
+    if (user && userRole === "admin") {
+      navigate("/admin/dashboard");
+    }
+  }, [user, userRole, navigate]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -43,33 +46,10 @@ const AdminLogin = () => {
             </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Admin Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="admin@college.edu"
-                className="bg-background"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                className="bg-background"
-                required
-              />
-            </div>
-
-            <Button type="submit" className="w-full">
-              Login as Admin
-            </Button>
-          </form>
+          <AuthForm 
+            role="admin" 
+            onSuccess={() => navigate("/admin/dashboard")} 
+          />
         </Card>
       </div>
     </div>
