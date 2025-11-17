@@ -44,111 +44,117 @@ const DriverDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card">
+    <div className="min-h-screen bg-background dark">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-card-foreground">Driver Dashboard</h1>
+            <h1 className="text-xl font-semibold text-card-foreground">Driver Dashboard</h1>
             <p className="text-sm text-muted-foreground">Bus ID: BUS-101</p>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-destructive/10 hover:text-destructive">
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <main className="max-w-7xl mx-auto px-6 py-8 space-y-6">
         {/* Update Location Section */}
-        <Card className="bg-card border-border p-6 space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <MapPin className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold text-card-foreground">Update Location</h2>
+        <Card className="glass border-border/50 p-6 space-y-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <MapPin className="w-5 h-5 text-primary" />
+            </div>
+            <h2 className="text-lg font-semibold text-card-foreground">GPS Location</h2>
           </div>
           
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <p className="text-sm text-muted-foreground">Last updated</p>
-              <p className="text-lg font-medium text-card-foreground">
+              <p className="text-xl font-semibold text-card-foreground tabular-nums">
                 {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
-            <Button>
+            <Button className="bg-primary hover:bg-primary/90">
               <MapPin className="w-4 h-4 mr-2" />
-              Send Current GPS Location
+              Update Location
             </Button>
           </div>
         </Card>
 
         {/* Assigned Route Section */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Route className="w-5 h-5 text-info" />
-            <h2 className="text-xl font-semibold text-foreground">Assigned Route</h2>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Route className="w-5 h-5 text-primary" />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground">Assigned Route</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="bg-card border-border p-6 space-y-4">
+            <Card className="glass border-border/50 p-6 space-y-4">
               <h3 className="font-semibold text-card-foreground">Route Stops</h3>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {assignedRoute.map((stop, index) => (
                   <div
                     key={index}
-                    className={`flex items-center gap-4 p-3 rounded-lg ${
+                    className={`flex items-center gap-4 p-3 rounded-lg transition-all ${
                       stop.status === "current"
-                        ? "bg-primary/10 border border-primary"
+                        ? "bg-primary/10 border border-primary/50"
                         : stop.status === "completed"
-                        ? "bg-success/5"
-                        : "bg-secondary"
+                        ? "bg-card/50 border border-border/30"
+                        : "bg-card/30 border border-border/20"
                     }`}
                   >
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-semibold ${
                         stop.status === "current"
                           ? "bg-primary text-primary-foreground"
                           : stop.status === "completed"
-                          ? "bg-success text-success-foreground"
-                          : "bg-muted text-muted-foreground"
+                          ? "bg-success/20 text-success border border-success/30"
+                          : "bg-muted/50 text-muted-foreground"
                       }`}
                     >
                       {index + 1}
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-card-foreground">{stop.stop}</p>
-                      <p className="text-sm text-muted-foreground">{stop.time}</p>
+                      <p className="font-medium text-card-foreground text-sm">{stop.stop}</p>
+                      <p className="text-xs text-muted-foreground tabular-nums">{stop.time}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </Card>
 
-            <MapPlaceholder title="Route Map" height="h-full min-h-[400px]" />
+            <MapPlaceholder title="Route Navigation" height="h-full min-h-[400px]" />
           </div>
         </div>
 
         {/* Trip Summary Section */}
-        <Card className="bg-card border-border p-6 space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-5 h-5 text-success" />
-            <h2 className="text-xl font-semibold text-card-foreground">Trip Summary</h2>
+        <Card className="glass border-border/50 p-6 space-y-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-success/10 border border-success/20">
+              <Clock className="w-5 h-5 text-success" />
+            </div>
+            <h2 className="text-lg font-semibold text-card-foreground">Trip Summary</h2>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
-            <div className="space-y-1">
+            <div className="space-y-2">
               <p className="text-sm text-muted-foreground">Total Stops</p>
-              <p className="text-2xl font-bold text-card-foreground">5</p>
+              <p className="text-3xl font-bold text-card-foreground tabular-nums">5</p>
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               <p className="text-sm text-muted-foreground">Completed</p>
-              <p className="text-2xl font-bold text-success">2</p>
+              <p className="text-3xl font-bold text-success tabular-nums">2</p>
             </div>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Distance Covered</p>
-              <p className="text-2xl font-bold text-card-foreground">8.5 km</p>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Distance</p>
+              <p className="text-3xl font-bold text-card-foreground tabular-nums">8.5<span className="text-base ml-1">km</span></p>
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               <p className="text-sm text-muted-foreground">Passengers</p>
-              <p className="text-2xl font-bold text-card-foreground">24</p>
+              <p className="text-3xl font-bold text-card-foreground tabular-nums">24</p>
             </div>
           </div>
         </Card>

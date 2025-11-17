@@ -43,6 +43,10 @@ export default {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
         },
+        eta: {
+          DEFAULT: "hsl(var(--eta-indicator))",
+          foreground: "hsl(var(--eta-indicator-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",

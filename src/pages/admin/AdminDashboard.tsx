@@ -60,21 +60,21 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card">
+    <div className="min-h-screen bg-background dark">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-card-foreground">Admin Dashboard</h1>
+            <h1 className="text-xl font-semibold text-card-foreground">Admin Dashboard</h1>
             <p className="text-sm text-muted-foreground">Fleet Management & Analytics</p>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-destructive/10 hover:text-destructive">
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <main className="max-w-7xl mx-auto px-6 py-8 space-y-6">
         {/* Stats Cards */}
         <div className="grid md:grid-cols-4 gap-6">
           <StatCard
@@ -110,18 +110,22 @@ const AdminDashboard = () => {
 
         {/* Live GPS Tracking Section */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Map className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold text-foreground">Live GPS Tracking</h2>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Map className="w-5 h-5 text-primary" />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground">Live GPS Tracking</h2>
           </div>
-          <MapPlaceholder title="Fleet Tracking Map" height="h-[500px]" />
+          <MapPlaceholder title="Real-time Fleet Monitoring" height="h-[500px]" />
         </div>
 
         {/* ML Prediction Section */}
-        <Card className="bg-card border-border p-6 space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="w-5 h-5 text-success" />
-            <h2 className="text-xl font-semibold text-card-foreground">Demand Prediction (Prophet Model)</h2>
+        <Card className="glass border-border/50 p-6 space-y-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-success/10 border border-success/20">
+              <TrendingUp className="w-5 h-5 text-success" />
+            </div>
+            <h2 className="text-lg font-semibold text-card-foreground">Demand Prediction</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -158,10 +162,12 @@ const AdminDashboard = () => {
         </Card>
 
         {/* K-Means Clustering Section */}
-        <Card className="bg-card border-border p-6 space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Map className="w-5 h-5 text-warning" />
-            <h2 className="text-xl font-semibold text-card-foreground">K-Means Clustering Analysis</h2>
+        <Card className="glass border-border/50 p-6 space-y-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-warning/10 border border-warning/20">
+              <Map className="w-5 h-5 text-warning" />
+            </div>
+            <h2 className="text-lg font-semibold text-card-foreground">Clustering Analysis</h2>
           </div>
 
           <Card className="bg-background border-border p-6 h-48 flex items-center justify-center mb-4">
@@ -192,13 +198,15 @@ const AdminDashboard = () => {
         </Card>
 
         {/* Route Optimization Section */}
-        <Card className="bg-card border-border p-6 space-y-4">
+        <Card className="glass border-border/50 p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Route className="w-5 h-5 text-info" />
-              <h2 className="text-xl font-semibold text-card-foreground">Route Optimization</h2>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                <Route className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-lg font-semibold text-card-foreground">Route Optimization</h2>
             </div>
-            <Button>
+            <Button className="bg-primary hover:bg-primary/90">
               <Route className="w-4 h-4 mr-2" />
               Optimize Routes
             </Button>
@@ -231,10 +239,12 @@ const AdminDashboard = () => {
         </Card>
 
         {/* Driver Assignment Section */}
-        <Card className="bg-card border-border p-6 space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <UserPlus className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold text-card-foreground">Driver Assignment</h2>
+        <Card className="glass border-border/50 p-6 space-y-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <UserPlus className="w-5 h-5 text-primary" />
+            </div>
+            <h2 className="text-lg font-semibold text-card-foreground">Driver Assignment</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -269,9 +279,9 @@ const AdminDashboard = () => {
             </div>
 
             <div className="flex items-end">
-              <Button className="w-full">
+              <Button className="w-full bg-primary hover:bg-primary/90">
                 <UserPlus className="w-4 h-4 mr-2" />
-                Assign Route to Driver
+                Assign Driver
               </Button>
             </div>
           </div>
