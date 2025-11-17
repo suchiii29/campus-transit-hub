@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Enterprise-grade design system - Microsoft Azure/Notion/Linear style */
 
 @layer base {
   :root {
@@ -17,7 +15,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 220 90% 56%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 220 15% 95%;
@@ -26,7 +24,7 @@ All colors MUST be HSL.
     --muted: 220 15% 95%;
     --muted-foreground: 220 10% 46%;
 
-    --accent: 220 90% 56%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -38,42 +36,49 @@ All colors MUST be HSL.
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --info: 199 89% 48%;
+    --info: 217 91% 60%;
     --info-foreground: 0 0% 100%;
+
+    --eta-indicator: 142 76% 55%;
+    --eta-indicator-foreground: 0 0% 100%;
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 220 90% 56%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --chart-1: 220 90% 56%;
-    --chart-2: 199 89% 48%;
-    --chart-3: 142 71% 45%;
-    --chart-4: 38 92% 50%;
-    --chart-5: 280 65% 60%;
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 71% 45%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 199 89% 48%;
   }
 
   .dark {
-    --background: 222 47% 7%;
+    /* Deep navy background */
+    --background: 216 28% 7%;
+    /* White text */
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 10%;
+    /* Slate gray cards */
+    --card: 215 20% 14%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 10%;
+    --popover: 215 20% 14%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 220 90% 56%;
+    /* Accent Blue */
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 222 47% 15%;
+    --secondary: 215 19% 18%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 222 47% 15%;
+    --muted: 215 19% 18%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 220 90% 56%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 63% 31%;
@@ -85,18 +90,22 @@ All colors MUST be HSL.
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --info: 199 89% 48%;
+    --info: 217 91% 60%;
     --info-foreground: 0 0% 100%;
 
-    --border: 222 47% 15%;
-    --input: 222 47% 15%;
-    --ring: 220 90% 56%;
+    /* Neon green for ETA */
+    --eta-indicator: 142 76% 55%;
+    --eta-indicator-foreground: 220 14% 11%;
 
-    --chart-1: 220 90% 56%;
-    --chart-2: 199 89% 48%;
-    --chart-3: 142 71% 45%;
-    --chart-4: 38 92% 50%;
-    --chart-5: 280 65% 60%;
+    --border: 215 19% 20%;
+    --input: 215 19% 18%;
+    --ring: 217 91% 60%;
+
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 71% 45%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 199 89% 48%;
   }
 }
 
@@ -107,5 +116,21 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Force dark mode */
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Glassmorphism utilities */
+@layer utilities {
+  .glass {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50;
+  }
+
+  .glass-hover {
+    @apply transition-all duration-300 hover:bg-card/80 hover:border-primary/50;
   }
 }

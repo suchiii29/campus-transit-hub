@@ -45,26 +45,28 @@ const StudentDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card">
+    <div className="min-h-screen bg-background dark">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-card-foreground">Student Dashboard</h1>
-            <p className="text-sm text-muted-foreground">Welcome back, Student</p>
+            <h1 className="text-xl font-semibold text-card-foreground">Student Dashboard</h1>
+            <p className="text-sm text-muted-foreground">Real-time bus tracking & scheduling</p>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-destructive/10 hover:text-destructive">
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <main className="max-w-7xl mx-auto px-6 py-8 space-y-6">
         {/* Request a Bus Section */}
-        <Card className="bg-card border-border p-6 space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Bus className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold text-card-foreground">Request a Bus</h2>
+        <Card className="glass border-border/50 p-6 space-y-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Bus className="w-5 h-5 text-primary" />
+            </div>
+            <h2 className="text-lg font-semibold text-card-foreground">Request a Bus</h2>
           </div>
           
           <form className="grid md:grid-cols-3 gap-4">
@@ -108,38 +110,45 @@ const StudentDashboard = () => {
             </div>
           </form>
 
-          <Button className="w-full md:w-auto">
+          <Button className="w-full md:w-auto bg-primary hover:bg-primary/90">
             Submit Request
           </Button>
         </Card>
 
         {/* Track Bus Live Section */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-info" />
-            <h2 className="text-xl font-semibold text-foreground">Track Bus Live</h2>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+              <MapPin className="w-5 h-5 text-primary" />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground">Live Bus Tracking</h2>
           </div>
-          <MapPlaceholder title="Live Bus Tracking" height="h-[400px]" />
+          <MapPlaceholder title="Real-time Fleet Monitoring" height="h-[400px]" />
         </div>
 
         {/* Nearest Buses Section */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-success" />
-            <h2 className="text-xl font-semibold text-foreground">Nearest Buses</h2>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-eta/10 border border-eta/20">
+              <Clock className="w-5 h-5 text-eta" />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground">Nearest Buses</h2>
           </div>
           
           <div className="grid md:grid-cols-3 gap-4">
             {nearestBuses.map((bus) => (
-              <Card key={bus.id} className="bg-card border-border p-5 space-y-3">
+              <Card key={bus.id} className="glass border-border/50 p-5 space-y-3 hover:border-primary/50 transition-all">
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-primary">{bus.id}</span>
-                  <span className="text-sm px-2 py-1 bg-success/10 text-success rounded-full">
+                  <span className="text-base font-semibold text-foreground">{bus.id}</span>
+                  <span className="text-xs px-3 py-1 bg-eta/20 text-eta rounded-full font-medium border border-eta/30">
                     {bus.eta}
                   </span>
                 </div>
-                <p className="text-sm text-card-foreground">{bus.route}</p>
-                <p className="text-xs text-muted-foreground">{bus.distance} away</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{bus.route}</p>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  {bus.distance} away
+                </div>
               </Card>
             ))}
           </div>
