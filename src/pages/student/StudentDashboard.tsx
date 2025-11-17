@@ -12,7 +12,13 @@ import MapPlaceholder from "@/components/MapPlaceholder";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
-  const { user, userRole, loading, signOut } = useAuth();
+  const { user, userRole, loading } = useAuth();
+  const { toast } = useToast();
+  const { buses } = useBusSimulation(8);
+  
+  const [pickupPoint, setPickupPoint] = useState("");
+  const [dropPoint, setDropPoint] = useState("");
+  const [preferredTime, setPreferredTime] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -21,17 +27,24 @@ const StudentDashboard = () => {
     }
   }, [user, userRole, loading, navigate]);
 
-  const handleLogout = async () => {
-    const { error } = await signOut();
-    if (error) {
+  const handleRequestRide = async () => {
+    if (!pickupPoint || !dropPoint) {
       toast({
-        title: "Error",
-        description: "Failed to logout",
+        title: "Missing Information",
+        description: "Please provide both pickup and drop points",
         variant: "destructive",
       });
-    } else {
-      navigate("/student/login");
+      return;
     }
+
+    toast({
+      title: "Ride Requested",
+      description: "Your bus request has been submitted successfully",
+    });
+
+    setPickupPoint("");
+    setDropPoint("");
+    setPreferredTime("");
   };
 
   if (loading || !user || userRole !== "student") {
